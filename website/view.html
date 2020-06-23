@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View marksheets</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align: center">View Marksheets</h1>
+    <p>Board : {{.board}}<br>School : {{.school}} <br>Exam : {{.exam}}<br>Year : {{ .year}}</p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Student Roll Number</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody id="body">
+        {{range .data}}
+        <tr>
+            <td>{{ .Name}}</td>
+            <td id="rollno">{{ .RollNo}}</td>
+
+            <td><button id="button" value="View" >View</button></td>
+            <script>
+                $('#button').click(function(e) {
+                    e.preventDefault();
+
+                    window.open("/find/?rollno="+document.getElementById('rollno').innerText)
+                    $.get("/find/?rollno="+document.getElementById('rollno').innerText, function(data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        alert(status);
+                    })});
+
+            </script>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
